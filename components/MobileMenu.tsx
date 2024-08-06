@@ -9,7 +9,7 @@ function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
       <div
         className={`w-6 h-1 bg-blue-500 rounded-sm ${
           isOpen ? 'rotate-45' : ''
-        } origin-top-left`}
+        } origin-top-left duration-100`}
       ></div>
       <div
         className={`w-6 h-1 bg-blue-500 rounded-sm ${
@@ -19,7 +19,7 @@ function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
       <div
         className={`w-6 h-1 bg-blue-500 rounded-sm ${
           isOpen ? '-rotate-45' : ''
-        } origin-bottom-left`}
+        } origin-bottom-left  duration-100`}
       ></div>
     </div>
   );
