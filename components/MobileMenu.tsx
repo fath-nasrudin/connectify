@@ -28,7 +28,7 @@ function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="relative md:hidden">
+    <div className="relative">
       <div
         onClick={() => {
           setIsOpen((prev) => !prev);
