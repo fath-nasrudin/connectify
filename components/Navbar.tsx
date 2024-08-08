@@ -2,6 +2,14 @@ import React from 'react';
 import { MobileMenu } from './MobileMenu';
 import Link from 'next/link';
 import { House, Users, CirclePlus } from 'lucide-react';
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/nextjs';
 
 export function Navbar() {
   return (
@@ -28,8 +36,24 @@ export function Navbar() {
         </div>
       </div>
 
-      <div className="md:hidden">
-        <MobileMenu />
+      <div className="flex items-center gap-4">
+        <div className="hidden md:block">
+          <ClerkLoading>Loading...</ClerkLoading>
+          <ClerkLoaded>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+
+            <SignedOut>
+              <SignInButton>
+                <span className="font-semibold cursor-pointer">Login</span>
+              </SignInButton>
+            </SignedOut>
+          </ClerkLoaded>
+        </div>
+        <div className="md:hidden">
+          <MobileMenu />
+        </div>
       </div>
     </div>
   );
