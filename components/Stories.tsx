@@ -12,14 +12,16 @@ function StoryItem() {
         alt="profile image"
         className="w-20 h-20 rounded-full border border-blue-600 object-cover"
       />
-      <span className="w-20 overflow-hidden text-ellipsis">Username</span>
+      <span className="w-20 overflow-hidden text-ellipsis font-semibold">
+        Username
+      </span>
     </div>
   );
 }
 
 function Stories() {
   return (
-    <div className="rounded-lg bg-white shadow-md overflow-x-scroll no-scrollbar">
+    <div className="rounded-lg bg-white shadow-md overflow-x-scroll no-scrollbar text-sm">
       <div className="p-4 flex gap-6">
         <StoryItem />
         <StoryItem />
