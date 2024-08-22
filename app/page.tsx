@@ -1,5 +1,6 @@
 import AddPost from '@/components/AddPost';
 import Feed from '@/components/Feed';
+import Rightbar from '@/components/Rightbar';
 import Stories from '@/components/Stories';
 
 export default function Home() {
@@ -13,7 +14,9 @@ export default function Home() {
           <Feed />
         </div>
       </div>
-      <div className="hidden lg:block w-[30%]">Right Content</div>
+      <div className="hidden lg:block w-[30%]">
+        <Rightbar />
+      </div>
     </div>
   );
 }
