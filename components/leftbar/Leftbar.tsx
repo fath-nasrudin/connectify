@@ -2,6 +2,7 @@ import React from 'react';
 import Ad from '../Ad';
 import Image from 'next/image';
 import Link from 'next/link';
+import ProfileCard from './ProfileCard';
 
 function ListMenu() {
   return (
@@ -70,9 +71,10 @@ function ListMenu() {
   );
 }
 
-function Leftbar() {
+function Leftbar({ type }: { type: 'profile' | 'home' }) {
   return (
     <div className="flex flex-col gap-6">
+      {type === 'home' && <ProfileCard />}
       <ListMenu />
       <Ad size="sm" />
     </div>
