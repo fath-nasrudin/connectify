@@ -1,5 +1,6 @@
 import Feed from '@/components/Feed';
 import Leftbar from '@/components/leftbar/Leftbar';
+import MainProfileCard from '@/components/MainProfileCard';
 import Rightbar from '@/components/Rightbar';
 import React from 'react';
 
@@ -11,6 +12,7 @@ function ProfilePage() {
       </div>
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
+          <MainProfileCard />
           <Feed />
         </div>
       </div>
