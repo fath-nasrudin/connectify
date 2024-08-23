@@ -22,19 +22,19 @@ function MainProfileCard() {
       <div className="mt-20 flex flex-col items-center gap-4">
         <h1 className="text-2xl font-bold"> Udin Sedunia Akhirat</h1>
         <div className="flex gap-8">
-          <div className="flex flex-col gap-2 items-center">
-            <div className="text-xl font-bold">456</div>
-            <div>Posts</div>
+          <div className="flex flex-col items-center">
+            <div className="font-bold">456</div>
+            <div className="text-sm text-slate-500">Posts</div>
           </div>
 
-          <div className="flex flex-col gap-2 items-center">
-            <div className="text-xl font-bold">4.2k</div>
-            <div>followers</div>
+          <div className="flex flex-col items-center">
+            <div className="font-bold">4.2k</div>
+            <div className="text-sm text-slate-500">followers</div>
           </div>
 
-          <div className="flex flex-col gap-2 items-center">
-            <div className="text-xl font-bold">1.2k</div>
-            <div>following</div>
+          <div className="flex flex-col items-center">
+            <div className="font-bold">1.2k</div>
+            <div className="text-sm text-slate-500">following</div>
           </div>
         </div>
       </div>
