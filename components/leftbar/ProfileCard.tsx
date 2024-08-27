@@ -33,7 +33,7 @@ async function ProfileCard() {
         />
         {/* Profile Image */}
         <Image
-          src={user.avatar || '/images/noAvatar.jpg'}
+          src={user.avatar || '/images/noAvatar.png'}
           alt=""
           width={48}
           height={48}

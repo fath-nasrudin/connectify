@@ -61,7 +61,7 @@ export async function POST(req: Request) {
         data: {
           id: evt.data.id,
           username: payload.data.username,
-          avatar: payload.data.image_url || '/images/noAvatar.jpg',
+          avatar: payload.data.image_url || '/images/noAvatar.png',
           name: payload.data.first_name,
           surname: payload.data.last_name,
           cover: '/images/noCover.jpg',
@@ -84,7 +84,7 @@ export async function POST(req: Request) {
         },
         data: {
           username: payload.data.username,
-          avatar: payload.data.image_url || '/images/noAvatar.jpg',
+          avatar: payload.data.image_url || '/images/noAvatar.png',
         },
       });
 
