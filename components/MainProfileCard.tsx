@@ -1,18 +1,29 @@
+import { User } from '@prisma/client';
 import Image from 'next/image';
 import React from 'react';
 
-function MainProfileCard() {
+type UserWithCount = User & {
+  _count: {
+    posts: number;
+    followers: number;
+    followings: number;
+  };
+};
+
+function MainProfileCard({ user }: { user: UserWithCount }) {
   return (
     <div>
       <div className="w-full h-64 relative">
+        {/* cover image*/}
         <Image
-          src="https://images.pexels.com/photos/27372368/pexels-photo-27372368/free-photo-of-view-of-mountains-at-sunset.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
+          src={user.cover || '/images/noCover.jpg'}
           alt=""
           fill
           className="object-cover rounded-md"
         />
+        {/* profile image */}
         <Image
-          src="https://images.pexels.com/photos/15968918/pexels-photo-15968918/free-photo-of-portrait-of-woman.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
+          src={user.avatar || '/images/noAvatar.png'}
           alt=""
           width={128}
           height={128}
@@ -20,20 +31,24 @@ function MainProfileCard() {
         />
       </div>
       <div className="mt-20 flex flex-col items-center gap-4">
-        <h1 className="text-2xl font-bold"> Udin Sedunia Akhirat</h1>
+        <h1 className="text-2xl font-bold">
+          {user.name && user.surname
+            ? `${user.name} ${user.surname}`
+            : user.username}
+        </h1>
         <div className="flex gap-8">
           <div className="flex flex-col items-center">
-            <div className="font-bold">456</div>
+            <div className="font-bold">{user._count.posts}</div>
             <div className="text-sm text-slate-500">Posts</div>
           </div>
 
           <div className="flex flex-col items-center">
-            <div className="font-bold">4.2k</div>
+            <div className="font-bold">{user._count.followers}</div>
             <div className="text-sm text-slate-500">followers</div>
           </div>
 
           <div className="flex flex-col items-center">
-            <div className="font-bold">1.2k</div>
+            <div className="font-bold">{user._count.followings}</div>
             <div className="text-sm text-slate-500">following</div>
           </div>
         </div>
