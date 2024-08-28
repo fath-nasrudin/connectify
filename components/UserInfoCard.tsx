@@ -8,8 +8,11 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import FollowButton from './FollowButton';
+import { auth } from '@clerk/nextjs/server';
+import prisma from '@/lib/client';
 
-function UserInfoCard({ user }: { user: User }) {
+async function UserInfoCard({ user }: { user: User }) {
   // format joined date
   const createdAtDate = new Date(user.createdAt);
 
@@ -18,6 +21,32 @@ function UserInfoCard({ user }: { user: User }) {
     month: 'long',
     day: 'numeric',
   });
+
+  // get follow and followRequest statuses
+  let isFollowing = false;
+  let IsFollowRequestSent = false;
+
+  const { userId: currentUserId } = auth();
+
+  if (currentUserId) {
+    const followExist = await prisma.follow.findFirst({
+      where: {
+        followerId: currentUserId,
+        followingId: user.id,
+      },
+    });
+    followExist ? (isFollowing = true) : (isFollowing = false);
+
+    const followRequestExist = await prisma.followRequest.findFirst({
+      where: {
+        senderId: currentUserId,
+        receiverId: user.id,
+      },
+    });
+    followRequestExist
+      ? (IsFollowRequestSent = true)
+      : (IsFollowRequestSent = false);
+  }
 
   return (
     <div className="p-4 rounded-lg bg-white shadow-md text-sm flex flex-col gap-4">
@@ -97,9 +126,11 @@ function UserInfoCard({ user }: { user: User }) {
 
         {/* Interactions */}
         <div className="flex flex-col gap-2">
-          <button className="py-2 px-4 rounded-md text-center bg-blue-500 text-white font-semibold">
-            Follow
-          </button>
+          <FollowButton
+            userId={user.id}
+            isFollowing={isFollowing}
+            isFollowRequestSent={IsFollowRequestSent}
+          />
           <button className="self-end text-red-500">Block User</button>
         </div>
       </div>
