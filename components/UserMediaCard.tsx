@@ -1,8 +1,9 @@
+import { User } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-function UserMediaCard({ userId }: { userId: string }) {
+function UserMediaCard({ user }: { user: User }) {
   return (
     <div className="p-4 rounded-lg bg-white shadow-md ">
       {/* Header */}

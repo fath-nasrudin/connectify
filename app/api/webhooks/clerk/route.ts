@@ -64,7 +64,7 @@ export async function POST(req: Request) {
           avatar: payload.data.image_url || '/images/noAvatar.png',
           name: payload.data.first_name,
           surname: payload.data.last_name,
-          cover: '/images/noCover.png',
+          cover: '/images/noCover.jpg',
         },
       });
 
