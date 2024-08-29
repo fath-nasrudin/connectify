@@ -11,6 +11,7 @@ import React from 'react';
 import FollowButton from './FollowButton';
 import { auth } from '@clerk/nextjs/server';
 import prisma from '@/lib/client';
+import BlockButton from './BlockButton';
 
 async function UserInfoCard({ user }: { user: User }) {
   // format joined date
@@ -25,6 +26,7 @@ async function UserInfoCard({ user }: { user: User }) {
   // get follow and followRequest statuses
   let isFollowing = false;
   let IsFollowRequestSent = false;
+  let isBlocked = false;
 
   const { userId: currentUserId } = auth();
 
@@ -46,6 +48,14 @@ async function UserInfoCard({ user }: { user: User }) {
     followRequestExist
       ? (IsFollowRequestSent = true)
       : (IsFollowRequestSent = false);
+
+    const blockExist = await prisma.block.findFirst({
+      where: {
+        blockSenderId: currentUserId,
+        blockReceiverId: user.id,
+      },
+    });
+    blockExist ? (isBlocked = true) : (isBlocked = false);
   }
 
   return (
@@ -131,7 +141,7 @@ async function UserInfoCard({ user }: { user: User }) {
             isFollowing={isFollowing}
             isFollowRequestSent={IsFollowRequestSent}
           />
-          <button className="self-end text-red-500">Block User</button>
+          <BlockButton userId={user.id} isBlocked={isBlocked} />
         </div>
       </div>
     </div>
