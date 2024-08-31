@@ -135,14 +135,17 @@ async function UserInfoCard({ user }: { user: User }) {
         </div>
 
         {/* Interactions */}
-        <div className="flex flex-col gap-2">
-          <FollowButton
-            userId={user.id}
-            isFollowing={isFollowing}
-            isFollowRequestSent={IsFollowRequestSent}
-          />
-          <BlockButton userId={user.id} isBlocked={isBlocked} />
-        </div>
+        {/* Only render when userId is not currentUserId */}
+        {currentUserId !== user.id && (
+          <div className="flex flex-col gap-2">
+            <FollowButton
+              userId={user.id}
+              isFollowing={isFollowing}
+              isFollowRequestSent={IsFollowRequestSent}
+            />
+            <BlockButton userId={user.id} isBlocked={isBlocked} />
+          </div>
+        )}
       </div>
     </div>
   );
