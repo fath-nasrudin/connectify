@@ -12,6 +12,7 @@ import FollowButton from './FollowButton';
 import { auth } from '@clerk/nextjs/server';
 import prisma from '@/lib/client';
 import BlockButton from './BlockButton';
+import UpdateUser from './UpdateUser';
 
 async function UserInfoCard({ user }: { user: User }) {
   // format joined date
@@ -63,9 +64,15 @@ async function UserInfoCard({ user }: { user: User }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <span className="text-sm text-gray-500">User Information</span>
-        <Link href="/">
-          <span className="text-blue-500  font-semibold text-xs">See all</span>
-        </Link>
+        {currentUserId === user.id ? (
+          <UpdateUser user={user} />
+        ) : (
+          <Link href="/">
+            <span className="text-blue-500  font-semibold text-xs">
+              See all
+            </span>
+          </Link>
+        )}
       </div>
 
       {/* Content */}
