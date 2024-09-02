@@ -1,6 +1,8 @@
 import { User } from '@prisma/client';
 import Image from 'next/image';
 import React from 'react';
+import UpdateUser from './UpdateUser';
+import { auth } from '@clerk/nextjs/server';
 
 type UserWithCount = User & {
   _count: {
@@ -11,6 +13,8 @@ type UserWithCount = User & {
 };
 
 function MainProfileCard({ user }: { user: UserWithCount }) {
+  const { userId: currentUserId } = auth();
+
   return (
     <div>
       <div className="w-full h-64 relative">
@@ -31,11 +35,15 @@ function MainProfileCard({ user }: { user: UserWithCount }) {
         />
       </div>
       <div className="mt-20 flex flex-col items-center gap-4">
-        <h1 className="text-2xl font-bold">
-          {user.name && user.surname
-            ? `${user.name} ${user.surname}`
-            : user.username}
-        </h1>
+        <div className="flex flex-col items-center">
+          <h1 className="text-2xl font-bold">
+            {user.name && user.surname
+              ? `${user.name} ${user.surname}`
+              : user.username}
+          </h1>
+
+          {user.id === currentUserId && <UpdateUser user={user} />}
+        </div>
         <div className="flex gap-8">
           <div className="flex flex-col items-center">
             <div className="font-bold">{user._count.posts}</div>
