@@ -127,7 +127,14 @@ async function UserInfoCard({ user }: { user: User }) {
           {/* website link and joined date */}
           <div className="flex gap-2 flex-wrap justify-between">
             {user.website && (
-              <Link href={user.website} target="_blank">
+              <Link
+                href={
+                  user.website.startsWith('http')
+                    ? user.website
+                    : `https://${user.website}`
+                }
+                target="_blank"
+              >
                 <div className="flex gap-2 items-center">
                   <LinkIcon size={'16'} />
                   <span className="text-blue-500">{user.website}</span>
