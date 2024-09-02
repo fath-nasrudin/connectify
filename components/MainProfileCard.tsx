@@ -51,12 +51,13 @@ function MainProfileCard({ user }: { user: UserWithCount }) {
           </div>
 
           <div className="flex flex-col items-center">
-            <div className="font-bold">{user._count.followers}</div>
+            {/* its intended to change the followings and followers */}
+            <div className="font-bold">{user._count.followings}</div>
             <div className="text-sm text-slate-500">followers</div>
           </div>
 
           <div className="flex flex-col items-center">
-            <div className="font-bold">{user._count.followings}</div>
+            <div className="font-bold">{user._count.followers}</div>
             <div className="text-sm text-slate-500">following</div>
           </div>
         </div>

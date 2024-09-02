@@ -142,3 +142,61 @@ export const updateUser = async (
     };
   }
 };
+
+export const acceptFollowRequest = async (userId: string) => {
+  const { userId: currentUserId } = auth();
+  if (!currentUserId) throw new Error('User is not authenticated!');
+
+  try {
+    // find the follow request
+    const existingFollowRequest = await prisma.followRequest.findFirst({
+      where: {
+        senderId: userId,
+        receiverId: currentUserId,
+      },
+    });
+
+    if (existingFollowRequest) {
+      // delete follow request record
+      await prisma.followRequest.delete({
+        where: { id: existingFollowRequest.id },
+      });
+
+      // create follow record
+      await prisma.follow.create({
+        data: {
+          followerId: userId,
+          followingId: currentUserId,
+        },
+      });
+    }
+  } catch (error) {
+    console.error('Failed to accept the follow request', error);
+    throw new Error('Failed to Accept the follow request');
+  }
+};
+
+export const declineFollowRequest = async (userId: string) => {
+  const { userId: currentUserId } = auth();
+  if (!currentUserId) throw new Error('User is not authenticated!');
+
+  try {
+    // find the follow request
+    const existingFollowRequest = await prisma.followRequest.findFirst({
+      where: {
+        senderId: userId,
+        receiverId: currentUserId,
+      },
+    });
+
+    if (existingFollowRequest) {
+      // delete follow request record
+      await prisma.followRequest.delete({
+        where: { id: existingFollowRequest.id },
+      });
+    }
+  } catch (error) {
+    console.error('Failed to accept the follow request', error);
+    throw new Error('Failed to Accept the follow request');
+  }
+};

@@ -1,7 +1,29 @@
+import prisma from '@/lib/client';
+import { auth } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import Link from 'next/link';
+import FollowRequestList from './FollowRequestList';
 
-function FriendRequests() {
+async function FriendRequests() {
+  const { userId: currentUserId } = auth();
+  if (!currentUserId) return null;
+
+  const friendRequestList = await prisma.followRequest.findMany({
+    where: {
+      receiverId: currentUserId,
+    },
+    include: {
+      sender: true,
+    },
+    orderBy: {
+      createdAt: 'asc',
+    },
+    take: 3,
+  });
+
+  // dont render if there are no friend request
+  if (!friendRequestList.length) return null;
+
   return (
     <div className="p-4 rounded-lg bg-white shadow-md flex flex-col gap-4">
       {/* Header */}
@@ -12,100 +34,7 @@ function FriendRequests() {
         </Link>
       </div>
       {/* Request list */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <Link href="/">
-            <div className="flex gap-2 items-center  cursor-pointer">
-              <Image
-                src="https://images.pexels.com/photos/27791648/pexels-photo-27791648/free-photo-of-snowboard-saklikent-antalya.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
-                alt=""
-                width={40}
-                height={40}
-                className="w-6 h-6 rounded-full"
-              />
-              <span className="font-semibold text-sm">Layla Majnoon</span>
-            </div>
-          </Link>
-          <div className="flex gap-4 items-center">
-            <Image
-              src="/images/accept.png"
-              alt=""
-              width={16}
-              height={16}
-              className="cursor-pointer"
-            />
-            <Image
-              src="/images/reject.png"
-              alt=""
-              width={16}
-              height={16}
-              className="cursor-pointer"
-            />
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <Link href="/">
-            <div className="flex gap-2 items-center  cursor-pointer">
-              <Image
-                src="https://images.pexels.com/photos/27791648/pexels-photo-27791648/free-photo-of-snowboard-saklikent-antalya.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
-                alt=""
-                width={40}
-                height={40}
-                className="w-6 h-6 rounded-full"
-              />
-              <span className="font-semibold text-sm">Layla Majnoon</span>
-            </div>
-          </Link>
-          <div className="flex gap-4 items-center">
-            <Image
-              src="/images/accept.png"
-              alt=""
-              width={16}
-              height={16}
-              className="cursor-pointer"
-            />
-            <Image
-              src="/images/reject.png"
-              alt=""
-              width={16}
-              height={16}
-              className="cursor-pointer"
-            />
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <Link href="/">
-            <div className="flex gap-2 items-center  cursor-pointer">
-              <Image
-                src="https://images.pexels.com/photos/27791648/pexels-photo-27791648/free-photo-of-snowboard-saklikent-antalya.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
-                alt=""
-                width={40}
-                height={40}
-                className="w-6 h-6 rounded-full"
-              />
-              <span className="font-semibold text-sm">Layla Majnoon</span>
-            </div>
-          </Link>
-          <div className="flex gap-4 items-center">
-            <Image
-              src="/images/accept.png"
-              alt=""
-              width={16}
-              height={16}
-              className="cursor-pointer"
-            />
-            <Image
-              src="/images/reject.png"
-              alt=""
-              width={16}
-              height={16}
-              className="cursor-pointer"
-            />
-          </div>
-        </div>
-      </div>
+      <FollowRequestList requests={friendRequestList} />
     </div>
   );
 }
