@@ -31,7 +31,7 @@ async function ProfilePage({ params }: { params: { username: string } }) {
       <div className="w-full lg:w-[70%] xl:w-[50%]">
         <div className="flex flex-col gap-6">
           <MainProfileCard user={user} />
-          <Feed />
+          <Feed targetUserId={user.id} />
         </div>
       </div>
       <div className="hidden lg:block w-[30%]">
