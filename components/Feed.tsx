@@ -78,7 +78,7 @@ async function Feed({ targetUserId }: { targetUserId?: string }) {
   }
 
   return (
-    <div className="p-4 rounded-lg bg-white shadow-md flex flex-col gap-8">
+    <div className="p-4 rounded-lg bg-white shadow-md flex flex-col">
       {posts.length
         ? posts.map((postItem) => <Post key={postItem.id} post={postItem} />)
         : 'No post available'}

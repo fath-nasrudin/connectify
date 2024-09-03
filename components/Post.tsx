@@ -30,7 +30,7 @@ async function PostComponent({ post }: { post: PostWithDetail }) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 border-b-2 border-slate-300 py-8">
       {/* User */}
       <Link
         href={`/profile/${post.user.username}`}
@@ -67,6 +67,7 @@ async function PostComponent({ post }: { post: PostWithDetail }) {
       </div>
       {/* Interaction buttons */}
       <PostInteraction post={post} />
+      <hr className="mx-4" />
       {/* Comments */}
       <Comments />
     </div>
