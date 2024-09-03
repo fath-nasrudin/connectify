@@ -200,3 +200,49 @@ export const declineFollowRequest = async (userId: string) => {
     throw new Error('Failed to Accept the follow request');
   }
 };
+
+export const switchLike = async ({
+  postId,
+  commentId,
+}: {
+  postId?: number;
+  commentId?: number;
+}) => {
+  console.log('Switched');
+  const { userId: currentUserId } = auth();
+  if (!currentUserId) throw new Error('User is not authenticated!');
+
+  try {
+    const existLike = await prisma.like.findFirst({
+      where: {
+        userId: currentUserId,
+        OR: [
+          postId ? { postId: postId } : {},
+          commentId ? { commentId: commentId } : {},
+        ],
+      },
+    });
+
+    console.log({ existLike });
+
+    // delete if exist
+    if (existLike) {
+      await prisma.like.delete({
+        where: { id: existLike.id },
+      });
+
+      // create if isnt exist
+    } else {
+      await prisma.like.create({
+        data: {
+          commentId: commentId,
+          postId: postId,
+          userId: currentUserId,
+        },
+      });
+    }
+  } catch (error) {
+    console.error('Something went wrong!', error);
+    throw new Error('Something went wrong!');
+  }
+};
